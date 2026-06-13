@@ -1,9 +1,30 @@
 from tkinter import *
+from tkinter import messagebox
+from random import choice, randint, shuffle
 
 FONT = ('Calibre', 20)
 
 def generate_password():
-    pass
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+               'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+               'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+
+    letters_list = [choice(letters) for _ in range(randint(4, 7))]
+    numbers_list = [choice(numbers) for _ in range(randint(2, 4))]
+    symbols_list = [choice(symbols) for _ in range(randint(2, 4))]
+
+    password_list = letters_list + numbers_list + symbols_list
+
+    shuffle(password_list)
+
+    password = ''.join(password_list)
+
+    password_entry.delete(0, END)
+    password_entry.insert(0, password)
+
 
 def add():
 
@@ -11,12 +32,19 @@ def add():
     email = email_entry.get()
     password = password_entry.get()
 
-    with open("my_accounts.txt", 'a') as my_accounts:
-        my_accounts.write(f'-> {website} |-| {email} |-| {password}\n')
+    if len(website) == 0 or len(password) == 0:
+        messagebox.showinfo(title= ' Oops', message="Please make sure you haven't left any fields empty")
+    else:
+        is_ok = messagebox.askokcancel(title= website, message=f'Email:{email}\n'
+                                                               f'Password: {password}\n'
+                                                               f'Save ? ')
 
-    website_entry.delete(0, END)
-    password_entry.delete(0, END)
+        if is_ok:
+            with open("my_accounts.txt", 'a') as my_accounts:
+                my_accounts.write(f'-> {website} |-| {email} |-| {password}\n')
 
+            website_entry.delete(0, END)
+            password_entry.delete(0, END)
 
 
 window = Tk()
