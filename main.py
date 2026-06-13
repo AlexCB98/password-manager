@@ -1,5 +1,7 @@
 from tkinter import *
 
+FONT = ('Calibri', 20)
+
 def generate_password():
     pass
 
@@ -8,37 +10,39 @@ def add():
 
 window = Tk()
 window.title('Password Manager')
-window.config(padx= 20, pady= 20, bg= '#C0E1D2')
+window.config(padx= 100, pady= 50, bg= '#C0E1D2')
 
 canvas = Canvas(width= 400, height= 400, highlightthickness= 0, bg= '#C0E1D2')
 
 logo_img = PhotoImage(file='logo.png')
 logo_img = logo_img.subsample(4,4)
 canvas.create_image(200, 200, image= logo_img)
-canvas.grid(row= 0, column= 1)
+canvas.grid(row=0, column=0, columnspan=3)
 
-label_1 = Label(text= 'Website:', bg= '#C0E1D2')
-label_1.grid(row= 1, column= 0)
+website_label = Label(text='Website:', bg='#C0E1D2', font= FONT)
+website_label.grid(row=1, column=0, sticky="w")
 
-entry_1 = Entry(width= 50)
-entry_1.grid(row= 1, column= 1, columnspan= 2)
+website_entry = Entry(width= 50)
+website_entry.grid(row=1, column=1, columnspan=2, sticky="ew", ipady=5)
 
-label_2 = Label(text=' Email / Username:', bg= '#C0E1D2')
-label_2.grid(row= 2, column= 0)
+email_label = Label(text='Email / Username:', bg= '#C0E1D2', font= FONT)
+email_label.grid(row=2, column=0, sticky="w")
 
-entry_2 = Entry(width= 50)
-entry_2.grid(row= 2, column= 1, columnspan= 2)
+email_entry = Entry(width= 50)
+email_entry.grid(row=2, column=1, columnspan=2, sticky="ew", ipady=5)
 
-label_3 = Label(text= 'Password:', bg= '#C0E1D2')
-label_3.grid(row= 3, column= 0, sticky="ew")
+password_label = Label(text= 'Password:', bg= '#C0E1D2', font= FONT)
+password_label.grid(row=3, column=0, sticky="w")
 
-entry_3 = Entry(width= 25)
-entry_3.grid(row= 3, column= 1)
+password_entry = Entry(width= 25)
+password_entry.grid(row=3, column=1, sticky="ew", ipady=5)
 
-button_1 = Button(text= 'Generate Password', command=generate_password, bg= '#DBE4C9')
-button_1.grid(row= 3, column= 3, sticky="ew")
+generate_password_button = Button(text= 'Generate Password', command=generate_password, bg= '#DBE4C9')
+generate_password_button.config(padx=1, pady=0)
+generate_password_button.grid(row=3, column=2, padx=(6, 0))
 
-button_2 = Button(text= 'Add', command= add, bg= '#DBE4C9')
-button_2.grid(row= 4, column= 1, columnspan= 2)
+add_button = Button(text= 'Add', command= add, width= 42, bg= '#DBE4C9')
+add_button.config(padx= 2, pady= 2)
+add_button.grid(row=4, column=1, columnspan=2, sticky="ew")
 
 window.mainloop()
