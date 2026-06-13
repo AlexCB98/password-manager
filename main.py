@@ -1,12 +1,23 @@
 from tkinter import *
 
-FONT = ('Calibri', 20)
+FONT = ('Calibre', 20)
 
 def generate_password():
     pass
 
 def add():
-    pass
+
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+
+    with open("my_accounts.txt", 'a') as my_accounts:
+        my_accounts.write(f'-> {website} |-| {email} |-| {password}\n')
+
+    website_entry.delete(0, END)
+    password_entry.delete(0, END)
+
+
 
 window = Tk()
 window.title('Password Manager')
@@ -23,12 +34,14 @@ website_label = Label(text='Website:', bg='#C0E1D2', font= FONT)
 website_label.grid(row=1, column=0, sticky="w")
 
 website_entry = Entry(width= 50)
+website_entry.focus()
 website_entry.grid(row=1, column=1, columnspan=2, sticky="ew", ipady=5)
 
 email_label = Label(text='Email / Username:', bg= '#C0E1D2', font= FONT)
 email_label.grid(row=2, column=0, sticky="w")
 
 email_entry = Entry(width= 50)
+email_entry.insert(0, 'example_email@example.com')
 email_entry.grid(row=2, column=1, columnspan=2, sticky="ew", ipady=5)
 
 password_label = Label(text= 'Password:', bg= '#C0E1D2', font= FONT)
