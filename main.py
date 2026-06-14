@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
+import json
 
 FONT = ('Calibre', 20)
 
@@ -31,18 +32,29 @@ def add():
     website = website_entry.get()
     email = email_entry.get()
     password = password_entry.get()
+    new_data = {
+        website: {
+            'email': email,
+            'password': password,
+        }
+    }
 
     if len(website) == 0 or len(password) == 0:
         messagebox.showinfo(title= ' Oops', message="Please make sure you haven't left any fields empty")
     else:
-        is_ok = messagebox.askokcancel(title= website, message=f'Email:{email}\n'
-                                                               f'Password: {password}\n'
-                                                               f'Save ? ')
+        try:
+            with open("my_accounts.json", 'r') as my_accounts:
+                accounts = json.load(my_accounts)
 
-        if is_ok:
-            with open("my_accounts.txt", 'a') as my_accounts:
-                my_accounts.write(f'-> {website} |-| {email} |-| {password}\n')
+        except FileNotFoundError:
+            with open('my_accounts.json', 'w') as my_accounts:
+                json.dump(new_data, my_accounts, indent= 4)
+        else:
+            accounts.update(new_data)
+            with open('my_accounts.json', 'w') as my_accounts:
+                json.dump(accounts, my_accounts, indent=4)
 
+        finally:
             website_entry.delete(0, END)
             password_entry.delete(0, END)
 
